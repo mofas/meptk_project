@@ -2,11 +2,6 @@ const express = require('express');
 const http = require('http');
 const printer = require('node-native-printer');
 
-// console.log('All printers installed', printer.listPrinters());
-
-// console.log('The current printer', printer.getCurrentPrinter());
-// printer.print('./demo.pdf');
-
 const PORT = 4003;
 const main = async () => {
   const app = express();
