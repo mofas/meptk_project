@@ -68,7 +68,7 @@ function App() {
         style={{ background: 'blue', color: '#fff' }}
         onClick={() => setPage('printB')}
       >
-        Option A
+        Option B
       </div>
     );
   } else if (pageIdx === 'printA') {
