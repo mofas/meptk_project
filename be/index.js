@@ -1,8 +1,10 @@
 const express = require('express');
 const http = require('http');
 const printer = require('node-native-printer');
+const dns = require('dns');
 
 const PORT = 4003;
+
 const main = async () => {
   const app = express();
 
@@ -21,17 +23,25 @@ const main = async () => {
     rsp.send('Current Set Printer is :' + printer.getCurrentPrinter());
   });
 
-  app.get('/print/demo1', (req, rsp) => {
+  app.get('/print/printA', (req, rsp) => {
+    console.log('get printA');
     printer.print('./demo1.pdf');
-    rsp.send('');
+    rsp.send('get /print/printA');
   });
 
-  app.get('/print/demo2', (req, rsp) => {
-    printer.print('./demo2.pdf');
-    rsp.send('');
+  app.get('/print/printB', (req, rsp) => {
+    console.log('get printB');
+    printer.print('./demo2.pdf', null, '');
+    rsp.send('get /print/printB');
   });
 
-  console.log('Server listen at: ' + PORT);
+  const ADDR = await new Promise(cb =>
+    dns.lookup(require('os').hostname(), function(_, addr, _) {
+      return cb(addr);
+    })
+  );
+
+  console.log(`Server listen at:  ${ADDR}:${PORT}`);
   server.listen(PORT);
 };
 
